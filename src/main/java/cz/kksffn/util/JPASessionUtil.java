@@ -6,16 +6,24 @@ import java.util.function.Consumer;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import cz.kksffn.App;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author ivohr
  */
 public class JPASessionUtil {
+
+
     private static Map<String, EntityManagerFactory> persistenceUnits = new HashMap<>();
-    //@SuppressWarnings("WeakerAccess")
+    private static Logger logger = LoggerFactory.getLogger(JPASessionUtil.class);
+
+
     public static synchronized EntityManager getEntityManager(String persistenceUnitName) {
         persistenceUnits.putIfAbsent(persistenceUnitName,
             Persistence.createEntityManagerFactory(persistenceUnitName));
@@ -29,7 +37,7 @@ public class JPASessionUtil {
     
     public static void doWithEntityManager(Consumer<EntityManager> command) {
         EntityManager em = JPASessionUtil.getEntityManager("cz.kksffn.notebook");
-
+        logger.debug("In doWithEntityManager method...");
         //What about try catch?????????????????????????????
         em.getTransaction().begin();
         command.accept(em);
@@ -37,6 +45,7 @@ public class JPASessionUtil {
             !em.getTransaction().getRollbackOnly()) {
                     em.getTransaction().commit();
         } else {
+            logger.error("Rollback!");
             em.getTransaction().rollback();
         }
 

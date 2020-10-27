@@ -1,6 +1,6 @@
 package cz.kksffn.dao;
 
-import cz.kksffn.model.IEntity;
+import cz.kksffn.App;
 import cz.kksffn.model.TodoItem;
 import cz.kksffn.util.JPASessionUtil;
 import org.hibernate.exception.ConstraintViolationException;
@@ -66,8 +66,10 @@ public class TodoItemDao implements ITodoItemDao{
         }
  */
 
-    //CRUD--------------------------------------------------------------------------------------------------------------
-    //read--------------------------------------------------------------
+
+
+//===================================CRUD===============================================================================
+//read==================================================================================================================
 
     /**
      * Get all items from DB
@@ -115,12 +117,12 @@ public class TodoItemDao implements ITodoItemDao{
         return Optional.ofNullable(item[0]);
    }
 
+//create================================================================================================================
     /**
      * Create item in DB
      * @param item
      * @throws ConstraintViolationException
      */
-    //create-------------------------------------------------------------
     @Override
     public Long create(TodoItem item) throws ConstraintViolationException {
         JPASessionUtil.doWithEntityManager(em-> {
@@ -128,14 +130,13 @@ public class TodoItemDao implements ITodoItemDao{
         });
         return item.getId();
     }
-
+//update================================================================================================================
     /**
      * Update TodoItem item in DB if it exists
      * @param item
      * @throws ConstraintViolationException
      * @throws NoResultException
      */
-    //update-------------------------------------------------------------
     @Override
     public Long update(TodoItem item) throws ConstraintViolationException, NoResultException {
         JPASessionUtil.doWithEntityManager(em-> {
@@ -157,6 +158,7 @@ public class TodoItemDao implements ITodoItemDao{
         return item.getId();
     }
 
+//delete================================================================================================================
     /**
      * Delete TodoItem from DB if it exists
      * @param item
@@ -176,9 +178,7 @@ public class TodoItemDao implements ITodoItemDao{
                 //https://stackoverflow.com/questions/17027398/java-lang-illegalargumentexception-removing-a-detached-instance-com-test-user5
 
                 em.remove(em.contains(itemToDelete) ? itemToDelete : em.merge(itemToDelete));
-                System.out.println("Deleted");
             }else{
-                System.out.println("Not deleted!!!");
                 throw new NoResultException();
             }
         });

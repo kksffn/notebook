@@ -1,0 +1,74 @@
+<configuration>
+
+    <contextName>ProductionMode</contextName>
+    <property resource="logbacksettings.properties" />
+<!--    <variable scope="context" name="contextVariable" value="contextVariable!" />-->
+
+<!--    <appender name="FILE" class="ch.qos.logback.core.FileAppender">-->
+<!--        &lt;!&ndash; encoders are assigned the type-->
+<!--             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default &ndash;&gt;-->
+
+<!--        <file>logy.log</file>-->
+<!--        <encoder>-->
+<!--            <pattern>[%thread] %-5level %logger{36} - %msg%n</pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+    <appender name="FILE_TIME_SIZE_ROLL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <append>true</append>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${USER_HOME}\\${fileNameRolling}-%d{yyyy-MM-dd_HH}.%i.log</fileNamePattern>
+            <!-- 10 days of history and 2GB of data max, jinak smaže nějaký soubor - první??? -->
+            <maxHistory>10</maxHistory>
+            <maxFileSize>10MB</maxFileSize>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>[%highlight(%d{HH:MM:ss.SSS} [%level]) [%thread]]  %cyan(%logger{10} [%file:%line] [%M])  - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="HIBERNATE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <append>true</append>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${USER_HOME}\\${fileNameHibernate}-%d{yyyy-MM-dd_HH}.%i.log
+            </fileNamePattern>
+            <maxHistory>10</maxHistory>
+            <maxFileSize>20MB</maxFileSize>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                [%highlight(%d{yyyy-MM-dd HH:mm:ss.sss} [%thread] %-5level) [thread]] %logger{36} - %msg%n
+            </Pattern>
+        </encoder>
+    </appender>
+
+
+
+    <logger name="org.hibernate.SQL" level="debug" additivity="false">
+        <appender-ref ref="HIBERNATE"/>
+    </logger>
+    <logger name="org.hibernate.type.descriptor.sql" level="trace" additivity="false">
+        <appender-ref ref="HIBERNATE"/>
+    </logger>
+    <logger name="org.hibernate.stat" level="debug" additivity="false">
+        <appender-ref ref="HIBERNATE"/>
+    </logger>
+    <logger name="org.hibernate.engine.internal.StatisticalLoggingSessionEventListener" level="debug" additivity="false">
+        <appender-ref ref="HIBERNATE"/>
+    </logger>
+    <logger name="cz.kksffn" level="DEBUG">
+        <appender-ref ref="FILE_TIME_SIZE_ROLL"/>
+    </logger>
+<!--    <root level="DEBUG">-->
+<!--        <appender-ref ref="FILE"/>-->
+<!--    </root>-->
+
+</configuration>
