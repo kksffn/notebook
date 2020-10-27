@@ -1,19 +1,12 @@
 package cz.kksffn.model;
 
+import cz.kksffn.model.interfaces.IEntity;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  *
@@ -32,7 +25,7 @@ public class Category implements IEntity, Serializable {
     @Column(name= "tag")
     private String tag;
     
-    @ManyToMany
+    @ManyToMany(fetch= FetchType.EAGER)
     @JoinTable(
             name = "todo_item_category",
             joinColumns = {@JoinColumn(name = "category_id", 
@@ -95,12 +88,12 @@ public class Category implements IEntity, Serializable {
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
-        return true;
+        return id.equals(other.getId()) && tag.equals(other.getTag());
     }
 
     @Override
     public String toString() {
-        return "cz.kksffn.model.Category[ id=" + id + " ]";
+        return "Category: id = " + id + ", tag = \"" + tag +"\"";
     }
     
 }

@@ -1,4 +1,4 @@
-package cz.kksffn.dao;
+package cz.kksffn.dao.interfaces;
 
 import cz.kksffn.model.TodoItem;
 

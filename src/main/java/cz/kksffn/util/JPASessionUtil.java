@@ -39,19 +39,25 @@ public class JPASessionUtil {
         EntityManager em = JPASessionUtil.getEntityManager("cz.kksffn.notebook");
         logger.debug("In doWithEntityManager method...");
         //What about try catch?????????????????????????????
-        em.getTransaction().begin();
-        command.accept(em);
-        if (em.getTransaction().isActive() &&
-            !em.getTransaction().getRollbackOnly()) {
-                    em.getTransaction().commit();
-        } else {
-            logger.error("Rollback!");
-            em.getTransaction().rollback();
+        try {
+            em.getTransaction().begin();
+            command.accept(em);
+            if (em.getTransaction().isActive() &&
+                    !em.getTransaction().getRollbackOnly()) {
+                em.getTransaction().commit();
+            }
+        }catch (Exception e) {
+            logger.error(String.valueOf(e));
+             try {
+                logger.error("Exception! Trying to rollback!");
+                em.getTransaction().rollback();
+             }catch(Exception e2) {
+                 logger.error("Didn't manage to rollback!!" + String.valueOf(e2));
+             }
+        }finally {
+            em.close();
         }
-
-        em.close();
     }
-
     public static void doWithSession(Consumer<Session> command) {
         try(Session session = getSession("cz.kksffn.notebook")) {
             Transaction tx = session.beginTransaction();

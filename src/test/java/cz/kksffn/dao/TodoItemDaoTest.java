@@ -1,8 +1,9 @@
 package cz.kksffn.dao;
 
+import cz.kksffn.dao.interfaces.ITodoItemDao;
 import cz.kksffn.model.Category;
 import cz.kksffn.model.TodoItem;
-import cz.kksffn.service.ADaoFactory;
+import cz.kksffn.service.interfaces.ADaoFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.NoResultException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -99,7 +99,7 @@ class TodoItemDaoTest {
         @Test
         @DisplayName("Creating new item in DB and checking if it's there...")
         void create() {
-            logger.debug("Creating new TodoItem with category sest to 'Foufka' in DB and checking if it's there...");
+            logger.debug("Creating new TodoItem with category set to 'Foufka' in DB and checking if it's there...");
             TodoItem ukol = new TodoItem();
             LocalDateTime deadline = LocalDateTime.parse("2020-10-31T21:15");
             Category novaKategorie = new Category();
@@ -133,7 +133,7 @@ class TodoItemDaoTest {
             itemToUpdate.setAuthor("Pepa");
             itemToUpdate.setText("This text will not occur in DB!");
             itemToUpdate.setId(1_000_000L);
-            assertThrows(NoResultException.class, ()-> dao.update(itemToUpdate));
+            assertEquals(-1L, dao.update(itemToUpdate));
         }
         @Test
         @DisplayName("Updating item with id = 1 setting text to 'Testing update' and then checking the text, id and " +
@@ -161,7 +161,6 @@ class TodoItemDaoTest {
             }
         }
     }
-
     @Nested
     class DeleteTest{
         @Test

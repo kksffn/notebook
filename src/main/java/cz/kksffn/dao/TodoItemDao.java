@@ -1,6 +1,7 @@
 package cz.kksffn.dao;
 
 import cz.kksffn.App;
+import cz.kksffn.dao.interfaces.ITodoItemDao;
 import cz.kksffn.model.TodoItem;
 import cz.kksffn.util.JPASessionUtil;
 import org.hibernate.exception.ConstraintViolationException;
@@ -20,7 +21,7 @@ import javax.persistence.Persistence;
  *
  * @author ivohr
  */
-public class TodoItemDao implements ITodoItemDao{
+public class TodoItemDao implements ITodoItemDao {
 /** Přes SessionFactory------------------------------------------------------------
  try (Session session = HibernateUtil.getSession()) {
  items = session.createQuery("from TodoItem", TodoItem.class).list();
@@ -108,7 +109,6 @@ public class TodoItemDao implements ITodoItemDao{
      * @return
      */
     public Optional<TodoItem> readById(Long id) {
-        //AtomicReference<TodoItem> item = new AtomicReference<>();
         final TodoItem[] item = {null};
         JPASessionUtil.doWithEntityManager(em-> {
                     TodoItem foundItem = em.find(TodoItem.class, id);
@@ -126,7 +126,7 @@ public class TodoItemDao implements ITodoItemDao{
     @Override
     public Long create(TodoItem item) throws ConstraintViolationException {
         JPASessionUtil.doWithEntityManager(em-> {
-            em.persist(item);
+            item.setId(em.merge(item).getId());
         });
         return item.getId();
     }
@@ -152,12 +152,12 @@ public class TodoItemDao implements ITodoItemDao{
                 //Update entity in DB
                 em.merge(todoToUpdate);
             }else {
+                item.setId(-1L);
                 throw new NoResultException();
             }
         });
         return item.getId();
     }
-
 //delete================================================================================================================
     /**
      * Delete TodoItem from DB if it exists
@@ -170,13 +170,6 @@ public class TodoItemDao implements ITodoItemDao{
             Optional<TodoItem> entity = readById(item.getId());
             if (entity.isPresent()) {
                 TodoItem itemToDelete = entity.get();
-                System.out.println("Item id = " + itemToDelete.getId() + " found and will be deleed!!!!");
-//POZOR!!! Následující řádek je důležitý, protože:
-                //remove works only on entities which are managed in the current transaction/context... If you're
-                // retrieving the entity in an earlier transaction, (storing it in the HTTP session) and then attempting
-                // to remove it in a different transaction... this doesn¨t work!!!
-                //https://stackoverflow.com/questions/17027398/java-lang-illegalargumentexception-removing-a-detached-instance-com-test-user5
-
                 em.remove(em.contains(itemToDelete) ? itemToDelete : em.merge(itemToDelete));
             }else{
                 throw new NoResultException();

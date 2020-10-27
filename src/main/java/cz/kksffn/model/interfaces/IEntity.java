@@ -1,4 +1,4 @@
-package cz.kksffn.model;
+package cz.kksffn.model.interfaces;
 
 
 /** Interface, every Entity class should implement it

@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import cz.kksffn.model.interfaces.IEntity;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.ParamDef;
@@ -165,13 +167,13 @@ public class TodoItem implements IEntity, Serializable {
             printCategories += iterator.next().getTag() + " ";                    
         }
 
-        return "ITEM " + id + ": "
-                + "\n\t" + text + " do " + deadline.format(DateTimeFormatter.ofPattern("dd.MMM.yyyy, HH:mm"))
-                + "\n\tAuthor: " + author 
-                + "\n\tCreated at: " + createdAt.format(DateTimeFormatter.ofPattern("dd.MMM.yyyy, HH:mm"))
-                + "\n\tUpdated at: " + updatedAt.format(DateTimeFormatter.ofPattern("dd.MMM.yyyy, HH:mm"))
-                + "\n\tFulfilled: " + (fulfilled ? "splněno:-)" : "ještě nesplněno")
-                + "\n\tCategories: " + printCategories;
-
+        return "ITEM " + Optional.of(id).get() + ": "
+                + "\n\t" + Optional.of(text).get() + " do " +
+                            Optional.of(deadline.format(DateTimeFormatter.ofPattern("dd.MMM.yyyy, HH:mm"))).get()
+                + "\n\tAuthor: " + Optional.of(author).get()
+                + "\n\tCreated at: " + Optional.of(createdAt.format(DateTimeFormatter.ofPattern("dd.MMM.yyyy, HH:mm"))).get()
+                + "\n\tUpdated at: " + Optional.of(updatedAt.format(DateTimeFormatter.ofPattern("dd.MMM.yyyy, HH:mm"))).get()
+                + "\n\tFulfilled: " + Optional.of((fulfilled ? "splněno:-)" : "ještě nesplněno")).get()
+                + "\n\tCategories: " + Optional.of(printCategories).get();
     }
 }

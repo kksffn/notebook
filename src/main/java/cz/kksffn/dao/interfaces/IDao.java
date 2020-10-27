@@ -1,6 +1,6 @@
-package cz.kksffn.dao;
+package cz.kksffn.dao.interfaces;
 
-import cz.kksffn.model.IEntity;
+import cz.kksffn.model.interfaces.IEntity;
 import org.hibernate.exception.ConstraintViolationException;
 
 import javax.persistence.NoResultException;

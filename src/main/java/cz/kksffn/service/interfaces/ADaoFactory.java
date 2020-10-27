@@ -1,6 +1,8 @@
-package cz.kksffn.service;
+package cz.kksffn.service.interfaces;
 
-import cz.kksffn.dao.ITodoItemDao;
+import cz.kksffn.dao.interfaces.ICategoryDao;
+import cz.kksffn.dao.interfaces.ITodoItemDao;
+import cz.kksffn.service.HibernateDaoFactory;
 
 
 /**
@@ -12,5 +14,6 @@ public abstract class ADaoFactory {
     public static ADaoFactory getInstance() {return instance;}
 
     public abstract ITodoItemDao getTodoItemDao();
+    public abstract ICategoryDao getCategoryDao();
 }
 
