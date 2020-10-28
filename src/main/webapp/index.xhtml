@@ -5,17 +5,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <head>        
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <title>NOTEBOOK</title>
-        <link rel="stylesheet" href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="css/main.css"/>
-    </head>
+    <h:head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <title>NOTEBOOK</title>
+            <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="css/main.css"/>
+        <title>Our app</title>
+    </h:head>
     
-    <body>
-        <h1>This is our app</h1>
-        <header>
+    <h:body>
+        <header id="header">
+            <h1>This is our app</h1>
             <div class="navigation">
                 <div class="btn-group btn-group-sm pull-left">
                     
@@ -24,12 +25,22 @@
                     <a href="/notebook/blog" class="btn btn-default"> BLOG </a>
                     <a href="/notebook/photo" class="btn btn-default"> PHOTOS </a>
                 </div>
-            </div>
+            </div>            
         </header>
         
-        <h:outputText value="#{todoitem.text}">
-            
-        </h:outputText>
-    </body>
+        <main>
+            Welcome from main element...
+            <h:outputText value="#{todoitem.text}">
+            </h:outputText>      
+        </main>
+        
+        <aside>
+            This is aside element!
+        </aside>
+        
+        <footer>
+            This is a footer!
+        </footer>
+    </h:body>
 </html>
 
