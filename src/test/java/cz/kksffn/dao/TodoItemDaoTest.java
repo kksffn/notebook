@@ -4,6 +4,7 @@ import cz.kksffn.dao.interfaces.ITodoItemDao;
 import cz.kksffn.model.Category;
 import cz.kksffn.model.TodoItem;
 import cz.kksffn.service.interfaces.ADaoFactory;
+import cz.kksffn.util.JPASessionUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -16,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import org.junit.jupiter.api.AfterAll;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,6 +33,11 @@ class TodoItemDaoTest {
         logger = LoggerFactory.getLogger(TodoItemDaoTest.class);
         logger.debug("\n====================================TESTING TODOITEMDAO=======================================");
     }
+    
+//    @AfterAll
+//    static void closeEmF() {
+//        JPASessionUtil.closeEMF();
+//    }
     @Nested
     class readTest{
         @Test

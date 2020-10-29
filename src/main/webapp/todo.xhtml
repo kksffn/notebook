@@ -23,8 +23,8 @@
 
                     <a href="/notebook" class="btn btn-default">| HOME | </a>
                     <a href="/notebook/todo.xhtml" class="btn btn-default">| TODO | </a>                    
-                    <a href="/notebook/blog" class="btn btn-default">| BLOG | </a>
-                    <a href="/notebook/photo" class="btn btn-default">| PHOTOS |</a>
+                    <a href="/notebook/blog.xhtml" class="btn btn-default">| BLOG | </a>
+                    <a href="/notebook/photo.xhtml" class="btn btn-default">| PHOTOS |</a>
                 </div>
             </nav>            
         </header>  
@@ -52,6 +52,12 @@
                                     #{item.deadline}
                                 </h:column>                                
                             </h:dataTable>
+                            #{todoItemBean.items.get(0).text}
+                            #{todoItemBean.items.get(0).id}
+                            #{todoItemBean.items.get(0).author}
+                            #{todoItemBean.items.get(0).deadline}
+                            #{todoItemBean.items.get(0).categories}
+                            
                         </h:form>   
                 </div>               
                 <div class="menu-right">               

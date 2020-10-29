@@ -86,7 +86,6 @@ public class TodoItemDao implements ITodoItemDao {
         });
         return items;
     }
-
     /**
      * Get only fulfilled/unfulfilled items from DB
      * @param fulfilled

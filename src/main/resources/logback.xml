@@ -4,19 +4,18 @@
     <property resource="logbacksettings.properties" />
 <!--    <variable scope="context" name="contextVariable" value="contextVariable!" />-->
 
-<!--    <appender name="FILE" class="ch.qos.logback.core.FileAppender">-->
-<!--        &lt;!&ndash; encoders are assigned the type-->
-<!--             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default &ndash;&gt;-->
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <!-- encoders are assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
 
-<!--        <file>logy.log</file>-->
-<!--        <encoder>-->
-<!--            <pattern>[%thread] %-5level %logger{36} - %msg%n</pattern>-->
-<!--        </encoder>-->
-<!--    </appender>-->
+        <file>${destination}</file>
+        <encoder>
+            <pattern>[[%highlight(%d{yyyy-MM-dd HH:mm:ss.SSS})] %-5level [%thread]]  %logger{36} [%file:%line] %n - %msg%n</pattern>
+        </encoder>
+    </appender>
 
     <appender name="FILE_TIME_SIZE_ROLL" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <append>true</append>
-
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>${USER_HOME}\\${fileNameRolling}-%d{yyyy-MM-dd_HH}.%i.log</fileNamePattern>
             <!-- 10 days of history and 2GB of data max, jinak smaže nějaký soubor - první??? -->
@@ -24,7 +23,6 @@
             <maxFileSize>10MB</maxFileSize>
             <totalSizeCap>2GB</totalSizeCap>
         </rollingPolicy>
-
         <encoder>
             <pattern>[%highlight(%d{yyyy-MM-dd HH:mm:ss.SSS} [%level]) [%thread]]  %cyan(%logger{10} [%file:%line] [%M])  - %msg%n
             </pattern>
@@ -64,10 +62,13 @@
     <logger name="org.hibernate.engine.internal.StatisticalLoggingSessionEventListener" level="debug" additivity="false">
         <appender-ref ref="HIBERNATE"/>
     </logger>
+    <logger name="cz.kksffn" level="ERROR">
+        <appender-ref ref="FILE"/>
+    </logger>
     <logger name="cz.kksffn" level="DEBUG">
         <appender-ref ref="FILE_TIME_SIZE_ROLL"/>
     </logger>
-<!--    <root level="DEBUG">-->
+<!--    <root level="ERROR">-->
 <!--        <appender-ref ref="FILE"/>-->
 <!--    </root>-->
 

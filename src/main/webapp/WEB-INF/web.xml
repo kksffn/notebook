@@ -56,5 +56,10 @@
     <welcome-file>index.xhtml</welcome-file>
   </welcome-file-list>
 
+  <listener>
+      <listener-class>
+          cz.kksffn.listeners.ApplicationListener
+      </listener-class>          
+  </listener>
 
 </web-app>

@@ -20,12 +20,11 @@ public class TodoItemBean implements Serializable{
     private List<TodoItem> items;
     private ITodoItemDao dao;
     private static final long serialVersionUID = 1L;
+    
     @PostConstruct
     private void init(){
-        System.out.println("Jsem v init() metodě BEANy");
         dao = ADaoFactory.getInstance().getTodoItemDao();
-        setItems(dao.readAll());
-        System.out.println("Ale přečíst data se nepovedlo :(.......");
+        setItems(dao.readAll());        
     }     
     
 //==================== GETTERS & SETTERS =======================================    
@@ -38,7 +37,6 @@ public class TodoItemBean implements Serializable{
     public ITodoItemDao getDao() {
         return dao;
     }
-
     public void setDao(ITodoItemDao dao) {
         this.dao = dao;
     }

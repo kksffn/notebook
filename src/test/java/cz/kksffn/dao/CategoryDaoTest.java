@@ -5,6 +5,7 @@ import cz.kksffn.dao.interfaces.ITodoItemDao;
 import cz.kksffn.model.Category;
 import cz.kksffn.model.TodoItem;
 import cz.kksffn.service.interfaces.ADaoFactory;
+import cz.kksffn.util.JPASessionUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
+import org.junit.jupiter.api.AfterAll;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,6 +31,11 @@ class CategoryDaoTest {
         logger = LoggerFactory.getLogger(TodoItemDaoTest.class);
         logger.debug("\n====================================TESTING CATEGORYDAO=======================================");
     }
+//    @AfterAll
+//    static void closeEmF() {
+//        JPASessionUtil.closeEMF();
+//    }
+    
     @Test
     void readAll() {
         logger.debug("Get all categories from DB and check if the count is not 0.");

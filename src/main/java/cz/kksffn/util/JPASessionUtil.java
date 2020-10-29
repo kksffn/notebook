@@ -6,8 +6,6 @@ import java.util.function.Consumer;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
-import cz.kksffn.App;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
@@ -20,11 +18,13 @@ import org.slf4j.LoggerFactory;
 public class JPASessionUtil {
 
 
+    private static final String PUNAME = "cz.kksffn.notebook"; 
     private static Map<String, EntityManagerFactory> persistenceUnits = new HashMap<>();
     private static Logger logger = LoggerFactory.getLogger(JPASessionUtil.class);
 
 
     public static synchronized EntityManager getEntityManager(String persistenceUnitName) {
+        logger.debug("Getting Entity Manager============================" + persistenceUnits.size());
         persistenceUnits.putIfAbsent(persistenceUnitName,
             Persistence.createEntityManagerFactory(persistenceUnitName));
         return persistenceUnits.get(persistenceUnitName)
@@ -36,9 +36,8 @@ public class JPASessionUtil {
     }
     
     public static void doWithEntityManager(Consumer<EntityManager> command) {
-        EntityManager em = JPASessionUtil.getEntityManager("cz.kksffn.notebook");
+        EntityManager em = JPASessionUtil.getEntityManager(PUNAME);
         logger.debug("In doWithEntityManager method...");
-        //What about try catch?????????????????????????????
         try {
             em.getTransaction().begin();
             command.accept(em);
@@ -69,6 +68,14 @@ public class JPASessionUtil {
                 tx.rollback();
             }
         }
+    }
+    public static void closeEMF(){
+        try{
+            EntityManagerFactory emf = persistenceUnits.get(PUNAME);
+        emf.close();
+        }catch(Exception e){
+            logger.error("Exception while trying to close EMF!!");
+        }        
     }
 
 }
