@@ -31,7 +31,6 @@ class TodoItemDaoTest {
         logger = LoggerFactory.getLogger(TodoItemDaoTest.class);
         logger.debug("\n====================================TESTING TODOITEMDAO=======================================");
     }
-
     @Nested
     class readTest{
         @Test

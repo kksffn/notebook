@@ -26,7 +26,7 @@
         </rollingPolicy>
 
         <encoder>
-            <pattern>[%highlight(%d{HH:MM:ss.SSS} [%level]) [%thread]]  %cyan(%logger{10} [%file:%line] [%M])  - %msg%n
+            <pattern>[%highlight(%d{yyyy-MM-dd HH:mm:ss.SSS} [%level]) [%thread]]  %cyan(%logger{10} [%file:%line] [%M])  - %msg%n
             </pattern>
         </encoder>
     </appender>

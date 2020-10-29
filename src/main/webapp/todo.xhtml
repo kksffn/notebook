@@ -8,7 +8,7 @@
     <h:head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <title>nOtebOok</title>
+        <title>TodoApp</title>
         <link rel="stylesheet" href="css/bootstrap.min.css"/>
         <link rel="stylesheet" href="css/main.css"/>
         <!-- <h:outputStylesheet name="css/main.css"/> odkazuje do adresáře resources... -->
@@ -17,7 +17,7 @@
     
     <h:body>
         <header class="header page-header text-center" id="header">
-            <h1>This is our app</h1>
+            <h1>Todo App</h1>
             <nav class="navigation">
                 <div class="btn-group btn-group-sm pull-left">
 
@@ -32,14 +32,27 @@
         <main id="main" class="container group" role="main">
             <div class="container central">
                 <div class="content">                    
-                        Welcome to our pages
-                        <aside class="radius">                            
-                            <h4>If you would like to know more about us</h4>
-                            You can navigate through the pages:
-                           you can watch our photos or read something special on our bloG
-                           or send us en e-mail...
-                        </aside>
-                         We are Ivo a Olga...                     
+                        Here you can check some TodO notes
+                        <aside class="radius">
+                            Check the todo notes so you don't forget anything important!
+                        </aside> 
+                        You can view the notes according to date or categories, 
+                        edit or delete them or you can create new tasks... 
+                        Feel free to use the calendar on the right side of the page
+                        or logout if you want to...
+                        <h:form>
+                            <h:dataTable value ="#{todoItemBean.items}" var="item">
+                                <h:column>
+                                    #{item.text}
+                                </h:column>
+                                <h:column>
+                                    #{item.author}
+                                </h:column>
+                                <h:column>
+                                    #{item.deadline}
+                                </h:column>                                
+                            </h:dataTable>
+                        </h:form>   
                 </div>               
                 <div class="menu-right">               
                     <p>Toto bude postranní menu...</p>
@@ -51,9 +64,7 @@
             &copy; <h:outputLink value="index.xhtml">
                 Ivo &amp; Olinka 2020
             </h:outputLink>  |  <h:link value="Anička 2021" outcome="index.xhtml"/> 
-        </footer>
-                    
-        
+        </footer>  
     </h:body>
 </html>
 

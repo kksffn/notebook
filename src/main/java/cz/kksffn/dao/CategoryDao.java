@@ -19,7 +19,7 @@ public class CategoryDao implements ICategoryDao {
     public List<Category> readAll() {
         List<Category> categories = new ArrayList<>();
         JPASessionUtil.doWithEntityManager(em-> {
-            List<Category> list = em.createQuery("from Category", Category.class).getResultList();
+            List<Category> list = em.createQuery("from Category c", Category.class).getResultList();
             categories.addAll(list);
         });
         return categories;

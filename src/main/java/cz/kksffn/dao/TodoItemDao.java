@@ -79,8 +79,9 @@ public class TodoItemDao implements ITodoItemDao {
     @Override
     public List<TodoItem> readAll() {
         List<TodoItem> items = new ArrayList<>();
-        JPASessionUtil.doWithEntityManager(em-> {
-            List<TodoItem> list = em.createQuery("from TodoItem", TodoItem.class).getResultList();
+        JPASessionUtil.doWithEntityManager(em-> {       
+            // from TodoItem t je důležité, bez "t" se na stránce nezobrazí a TodoItemBean má problém!
+            List<TodoItem> list = em.createQuery("from TodoItem t", TodoItem.class).getResultList();
             items.addAll(list);
         });
         return items;
@@ -91,11 +92,12 @@ public class TodoItemDao implements ITodoItemDao {
      * @param fulfilled
      * @return
      */
+    @Override
     public List<TodoItem> readAll(boolean fulfilled) {
         List<TodoItem> items = new ArrayList<>();
 
         JPASessionUtil.doWithSession(session-> {
-            Query<TodoItem> query = session.createQuery("from TodoItem", TodoItem.class);
+            Query<TodoItem> query = session.createQuery("from TodoItem t", TodoItem.class);
             session.enableFilter("fulfilled").setParameter("fulfilled", fulfilled);
 
             items.addAll(query.list());
@@ -108,6 +110,7 @@ public class TodoItemDao implements ITodoItemDao {
      * @param id
      * @return
      */
+    @Override
     public Optional<TodoItem> readById(Long id) {
         final TodoItem[] item = {null};
         JPASessionUtil.doWithEntityManager(em-> {
@@ -116,11 +119,11 @@ public class TodoItemDao implements ITodoItemDao {
                 });
         return Optional.ofNullable(item[0]);
    }
-
 //create================================================================================================================
     /**
      * Create item in DB
      * @param item
+     * @return 
      * @throws ConstraintViolationException
      */
     @Override
@@ -134,6 +137,7 @@ public class TodoItemDao implements ITodoItemDao {
     /**
      * Update TodoItem item in DB if it exists
      * @param item
+     * @return 
      * @throws ConstraintViolationException
      * @throws NoResultException
      */
