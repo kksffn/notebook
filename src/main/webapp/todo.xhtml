@@ -4,7 +4,8 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -16,60 +17,104 @@
     </h:head>
     
     <h:body>
-        <header class="header page-header text-center" id="header">
+        <header class="page-header" id="page-header">
             <h1>Todo App</h1>
-            <nav class="navigation">
-                <div class="btn-group btn-group-sm pull-left">
-
-                    <a href="/notebook" class="btn btn-default">| HOME | </a>
-                    <a href="/notebook/todo.xhtml" class="btn btn-default">| TODO | </a>                    
-                    <a href="/notebook/blog.xhtml" class="btn btn-default">| BLOG | </a>
-                    <a href="/notebook/photo.xhtml" class="btn btn-default">| PHOTOS |</a>
-                </div>
+            <nav class="navigation" id="page-navigation">
+                <ul>
+                    <li>
+                        <h:outputLink value="/notebook">| HOME |</h:outputLink>
+                        <!--<a href="/notebook/">| HOME |</a>-->
+                    </li>
+                    <li>
+                        <h:link outcome="todo.xhtml" value= "| TODO |" />                    
+                    </li>
+                    <li>
+                        <h:link outcome="blog.xhtml" value= "| BLOG |" />
+                    </li>
+                    <li>
+                        <h:link outcome="photo.xhtml" value= "| PHOTOS |"/>
+                    </li>
+                </ul> 
             </nav>            
         </header>  
         
-        <main id="main" class="container group" role="main">
-            <div class="container central">
-                <div class="content">                    
-                        Here you can check some TodO notes
-                        <aside class="radius">
-                            Check the todo notes so you don't forget anything important!
-                        </aside> 
-                        You can view the notes according to date or categories, 
-                        edit or delete them or you can create new tasks... 
-                        Feel free to use the calendar on the right side of the page
-                        or logout if you want to...
-                        <h:form>
-                            <h:dataTable value ="#{todoItemBean.items}" var="item">
-                                <h:column>
-                                    #{item.text}
-                                </h:column>
-                                <h:column>
-                                    #{item.author}
-                                </h:column>
-                                <h:column>
+        <main id="wrapper">
+            <section id="todo_main" role="main">  
+                <section  id="todo-list">
+                    <h4> These are your tasks to do</h4>
+<!--                    <article class="list-group" style="clear:both">-->
+<!--                        <div class="list-group-item">-->
+<!--                            Here you can check some TodO notes-->
+<!--                            <aside id="aside">-->
+<!--                                "Check the todo notes so you don't forget anything important!"-->
+<!--                            </aside> -->
+<!--                            You can view the notes according to date or categories, -->
+<!--                            edit or delete them or you can create new tasks... -->
+<!--                            Feel free to use the calendar on the right side of the page-->
+<!--                            or logout if you want to...-->
+<!--                        </div>-->
+<!--                        -->
+<!--                    </article>    -->
+                    <ui:repeat value ="#{todoItemBean.items}" var="item"> 
+                        <article class="list-group" style="clear:both">
+                            <div class="list-group-item">
+                                <div>#{item.text}
+                                    <aside>
+                                        Autor: #{item.author}
+                                    </aside>
+                                </div>                                    
+                                <div class="controls float-left">
+                                    Termín:
                                     #{item.deadline}
-                                </h:column>                                
-                            </h:dataTable>
-                            #{todoItemBean.items.get(0).text}
-                            #{todoItemBean.items.get(0).id}
-                            #{todoItemBean.items.get(0).author}
-                            #{todoItemBean.items.get(0).deadline}
-                            #{todoItemBean.items.get(0).categories}
-                            
-                        </h:form>   
-                </div>               
-                <div class="menu-right">               
-                    <p>Toto bude postranní menu...</p>
-                </div>
-            </div> 
-        </main>  
-        
-        <footer class="footer page-footer radius">                
-            &copy; <h:outputLink value="index.xhtml">
-                Ivo &amp; Olinka 2020
-            </h:outputLink>  |  <h:link value="Anička 2021" outcome="index.xhtml"/> 
+                                </div> 
+                                <br/>
+                                <div class="controls float-left">      
+                                    <form action="_inc/make-item-done.php" method="post">              
+                                        <input name="done" type="hidden" value="3"></input>
+                                        <input type="submit" class="btn-sm" value=" done"></input>
+                                    </form>
+                                </div> 
+                                <div class="controls float-right">        
+                                    <a href="edit.php?id=3&amp;fulfilled=0" class="edit-link">edit </a>        
+                                    <a href="delete.php?id=3&amp;fulfilled=0" 
+                                       class="delete-link text-muted glyphicon glyphicon-remove">x</a>
+                                </div>
+                            </div>
+                        </article>
+                      </ui:repeat> 
+                </section>
+                <h:form id="add-form" prependId="false"> 
+                    <div ><h4>You can add new task here...</h4></div>
+                    <p class="form-group">
+                        <h:inputTextarea id="todo-text" class="form-control" title="Write what to do here" 
+                                         rows="3" required="true" 
+                                         requiredMessage="The text is required!"></h:inputTextarea>
+                    </p>
+                    <p class="form-group">
+                        <input type="datetime-local" class="form-control" 
+                               name="datetime" id="datetime" required="true"></input>                
+                    </p>                
+                    <p class="form-group">
+                        <h:commandButton value = "submit" action = "addTodo"/>
+                    </p>
+                    <h:message for="todo-text" showDetail="true"/>
+                </h:form>
+            </section>  
+            <section id = "sidebar">               
+                <p>Toto bude postranní menu...</p>
+            </section>
+        </main>
+        <footer class="page-footer" id="page-footer">                
+            <ul> 
+                <li id="copyright">
+                    &copy; 
+                    <h:link value="Ivo &amp; Olinka 2020" outcome="index.xhtml"/>
+                </li>
+                |
+                <li>
+                    <h:link value="Anička 2021" outcome="index.xhtml"/>
+                </li>   
+            </ul>
         </footer>  
     </h:body>
 </html>

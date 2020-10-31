@@ -13,24 +13,33 @@
         <link rel="stylesheet" href="css/main.css"/>
         <!-- <h:outputStylesheet name="css/main.css"/> odkazuje do adresáře resources... -->
         
-    </h:head>
+    </h:head>    
     
-    <h:body>
-        <header class="header page-header text-center" id="header">
+    <h:body>        
+        <header class="page-header" id="page-header">
+            
             <h1>This is our app</h1>
             <nav class="navigation">
-                <div class="btn-group btn-group-sm pull-left">
-
-                    <a href="/notebook" class="btn btn-default">| HOME | </a>
-                    <a href="/notebook/todo.xhtml" class="btn btn-default">| TODO | </a>                    
-                    <a href="/notebook/blog.xhtml" class="btn btn-default">| BLOG | </a>
-                    <a href="/notebook/photo.xhtml" class="btn btn-default">| PHOTOS |</a>
-                </div>
+                <ul>
+                    <li>
+                        <h:outputLink value="/notebook">| HOME |</h:outputLink>
+                        <!--<a href="/notebook/">| HOME |</a>-->
+                    </li>
+                    <li>
+                        <h:link outcome="todo.xhtml" value= "| TODO |" />                    
+                    </li>
+                    <li>
+                        <h:link outcome="blog.xhtml" value= "| BLOG |" />
+                    </li>
+                    <li>
+                        <h:link outcome="photo.xhtml" value= "| PHOTOS |"/>
+                    </li>
+                </ul> 
             </nav>            
         </header>  
         
-        <main id="main" class="container group" role="main">
-            <div class="container central">
+        <main id="wrapper">            
+            <section  id="todo-list">                
                 <div class="content">                    
                         Welcome to our pages.
                         <aside class="radius">                            
@@ -40,18 +49,22 @@
                            or send us en e-mail...
                         </aside>
                          We are Ivo a Olga...                     
-                </div>               
-                <div class="menu-right">               
-                    <p>Toto bude postranní menu...</p>
                 </div>
-            </div> 
-        </main>  
+            </section>
+        </main>        
         
-        <footer class="footer page-footer radius">                
-            &copy; <h:outputLink value="index.xhtml">
-                Ivo &amp; Olinka 2020
-            </h:outputLink>  |  <h:link value="Anička 2021" outcome="index.xhtml"/> 
-        </footer>
+        <footer class="page-footer" id="page-footer">                
+            <ul> 
+                <li id="copyright">
+                    &copy; 
+                    <h:link value="Ivo &amp; Olinka 2020" outcome="index.xhtml"/>
+                </li>
+                |
+                <li>
+                    <h:link value="Anička 2021" outcome="index.xhtml"/>
+                </li>   
+            </ul>
+        </footer>  
     </h:body>
 </html>
 
