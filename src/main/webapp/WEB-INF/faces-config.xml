@@ -1,7 +1,20 @@
 <faces-config version="2.3" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
       		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd">
-          
+    <application>
+        <locale-config>
+            <default-locale>cs</default-locale>
+            <supported-locale>cs</supported-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>cz.kksffn.notebook.messages</base-name>
+            <var>msg</var>
+        </resource-bundle>
+        
+        <!-- Možná budeme chtít přepsat standardní JSF hlášky, to se nastavuje zde: -->
+        <message-bundle>cz.kksffn.notebook.messages</message-bundle>
+    </application>      
           
           
 </faces-config>

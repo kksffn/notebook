@@ -18,6 +18,8 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <junit.jupiter.version>5.7.0</junit.jupiter.version>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
 
   <dependencies>
@@ -29,12 +31,25 @@
       <version>5.4.22.Final</version>
     </dependency>
     
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-jpamodelgen</artifactId>
+        <version>5.4.22.Final</version>
+        <scope>provided</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>6.1.6.Final</version>
+    </dependency>
+    
     <!-- Spojení s DB -->
     <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.21</version>
+      <version>8.0.22</version>
     </dependency>
 
     <!-- TESTOVÁNÍ -->
@@ -60,6 +75,11 @@
        <artifactId>javaee-web-api</artifactId>
        <version>8.0</version>
        <scope>provided</scope>
+     </dependency>     
+     <dependency>
+         <groupId>javax.persistence</groupId>
+         <artifactId>javax.persistence-api</artifactId>
+         <version>2.2</version>
      </dependency>
   </dependencies>
 

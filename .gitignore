@@ -28,7 +28,7 @@ hs_err_pid*
 target/
 
 /src/main/java/cz/kksffn/app.java
-/src/main/java/cz/kksffn/dao/AHibernateDao.java
+/src/main/java/cz/kksffn/notebook/dao/AHibernateDao.java
 /src/main/resources/hibernate.cfg.xml
 .idea
 notebook.iml
