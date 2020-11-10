@@ -29,7 +29,7 @@ body {
     opacity:0.9;
     clear:both;
 }
-#page-header{    
+#page-header{ 
     margin-bottom: 1em;
 }
 #page-footer{
@@ -80,12 +80,15 @@ header form{
     /*float:right;*/
 }
 /*============================= main section =================================*/
-#wrapper{    
-    height: 100%; /*calc(100%-3em);*/
+
+/*Sticky footer*/
+#wrapper{
+    min-height: 60%;    
+    height: auto;
     flex: 1 0 auto;
     max-width: 960px;
-    margin: 0 auto 100px auto;
-    clear: both;    
+    margin: 3em auto 50px auto;
+    clear: both;
 }
 .group:after, group:before {
     content: " ";
@@ -97,18 +100,35 @@ header form{
 .group {
     *zoom:1;
 }
+
+
+/*----------------------------------------------section todo list*/
 section#todo_main {
     max-width: 74%;
-    float: left;
-    /*box-shadow: 0 0 1em white;*/
-    margin:0 auto 0 5%;
+    float: left;    
+    margin:0 auto 1em 5%;
     text-align:left;  
 }
+/*------------------------------todo-list:*/
+.todo-list{
+    /*opacity:0.8;*/
+    width: 49%;
+    float:left;
+    margin-top: -3px;
+    border: solid 2px #aaaaaa;
+    border-top: hidden;
+    border-radius:0.5em;
+    border-top-left-radius: 0;
+    /*box-shadow: 0 0 1em white;*/
+    /*background-color:#aaaaaa;    */
+    background-color: rgba(170, 170, 170, 0.6) /*aby děti nezdědily opacity*/
+}
+/*---------------------article:*/
 article{
+    opacity:0.7;
     margin: 0 0 1em 0;
-    border: #000 1px solid;
+    /*border: #000 1px solid;*/
     border-radius:0.25em;
-    opacity:0.8;
 }
 article:nth-of-type(even){
     background-color: #483b3b; /*#e8a4a1;*/
@@ -116,7 +136,7 @@ article:nth-of-type(even){
 article:nth-of-type(odd){
     background-color: #655959; /*#e8bab8;*/
 }
-article:hover{
+article.list-group:hover{
     opacity:1;
 }
 .list-group-item {
@@ -158,19 +178,56 @@ p>input.btn{
     float:right;
 }
 
-#who-are-we {
-    margin:40px;
+/*-----------------------------------------tabs:*/
+main form.tabs{
+    width:49%;
+    opacity:0.6;
+}
+main div.tab {
+    display: block;
+}
+main ul.tab {
+    list-style-type: none;
+    display: inline;
+}
+main li.tab,
+main li.activetab {
+    list-style-type: none;
+    display: inline;
+    border-style: solid;
+    border-width: 2px 2px 1px 2px;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+    background-color: #aaaaaa;
+}
+main li.tab {
+    margin:0;
+    padding-top:3px;
+    border-color: #cccccc /*#aaaaaa #cccccc #cccccc;*/
+}
+main li.tab:last-child{
+    border:none;
+    background: none; 
+    margin-left:1.5em;
+}
+main li.activetab {
+    margin:0;
+    padding-top:5px;
+    border-color: #cccccc #cccccc #aaaaaa #cccccc;
+}
+main li.tab a,
+    main li.activetab a {
+    padding: 0 0.5em 0 0.5em;
+    font-size: 0.9em;
+    text-decoration: none;
+    /*font-weight: bold;*/
+    color:white;
+}
+main li.activetab a {
+    font-weight: bold;
 }
 
-h4 {
-    margin: 5px 0 0 5%;
-    text-align: center;
-}
-
-#todo-list{
-    width: 49%;
-    float:left;
-}
+/*--------------------------todo-list items:*/
 .tagy {
     font-style: italic;
     font-size: 0.75em;
@@ -180,11 +237,23 @@ h4 {
     margin-top:1em;
     clear:right;
 }
-/*-----adding new todo task----*/
+
+/*index page: welcome section*/
+.welcome {
+    width:50%;
+    margin:1em auto;
+    
+}
+#who-are-we {
+    margin:40px;
+}
+
+/*----------------------------------------------adding new todo task----*/
 #add-form{
     width:49%;
     float:right;
     opacity: 0.8;
+    margin-bottom:1em;
 }
 #add-form:hover{
     opacity:1;
@@ -201,9 +270,10 @@ section#sidebar{
     width: 20%;
     float:right;
     /*position:absolute;*/
-    position:fixed;
-    top:140px;
-    left:79%;
+    /*position:fixed;
+    top:140px;*/
+    margin:1em 0.5em 0 0.5em;
+    /*left:79%;*/
     /*margin-left:56%;*/    
     padding: 5px;
     border-radius: 1em;
@@ -225,6 +295,12 @@ section#sidebar{
 }
 .delete-link {
     position: relative;
+}
+article.list-group {
+    border-radius:0.5em;
+}
+article.list-group:first-child {
+    margin-top:2em;
 }
 .list-group-item .controls {
     display:none;

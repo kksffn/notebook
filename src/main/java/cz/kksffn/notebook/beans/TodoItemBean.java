@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.slf4j.Logger;
@@ -18,19 +20,33 @@ import org.slf4j.LoggerFactory;
 //https://stackoverflow.com/questions/23281500/this-web-container-has-not-yet-been-started-glassfish-4-0-01-web
 //JE POTŘEBA ZAVÍRAT ENTITYMANAGERFACTORY, jinak vznikne exception a data se nenačtou!!!
 @Named
-@RequestScoped
+@SessionScoped
 public class TodoItemBean implements Serializable{
      
     private List<TodoItem> items;
-    private ITodoItemDao dao;
+    private ITodoItemDao dao;    
+    private int fulfilled;
     private Logger logger = LoggerFactory.getLogger(TodoItemBean.class);
     private static final long serialVersionUID = 1L;
     
     @PostConstruct
     private void init(){
         dao = ADaoFactory.getInstance().getTodoItemDao();
-        setItems(dao.readAll());
         logger.debug("Jsem v init metodě (PostConstruct) TodoItemBean");
+        switch (fulfilled) {
+            case 0:
+                setItems(dao.readAll(false));
+                logger.debug(fulfilled +": Přečetl jsem všechny nesplněné úkoly");
+                break;
+            case 1:
+                setItems(dao.readAll(true));
+                logger.debug(fulfilled + ": Přečetl jsem všechny splněné úkoly");
+                break;                
+            default:
+                setItems(dao.readAll());
+                logger.debug(fulfilled + ": Přečetl jsem všechny úkoly");
+                break;
+        }
     }     
     
 //==================== GETTERS & SETTERS =======================================    
@@ -46,6 +62,23 @@ public class TodoItemBean implements Serializable{
     public void setDao(ITodoItemDao dao) {
         this.dao = dao;
     }    
+
+    public int getFulfilled() {
+        return fulfilled;
+    }
+
+    public void setFulfilled(int fulfilled) {
+        this.fulfilled = fulfilled;
+        init();
+    }
+
+    public Logger getLogger() {
+        return logger;
+    }
+
+    public void setLogger(Logger logger) {
+        this.logger = logger;
+    }
     
 //============================== Manage user inputs ============================
     public String createNewTask(NewTodoItem item){
@@ -61,7 +94,7 @@ public class TodoItemBean implements Serializable{
         entity.setAuthor(item.getAuthor());
         dao.create(entity);
         return "";
-    }
+    }   
     
     public void setEnglish() {
         FacesContext.getCurrentInstance().getViewRoot().setLocale(new Locale("en_GB"));
