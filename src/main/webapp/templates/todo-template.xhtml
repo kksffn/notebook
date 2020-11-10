@@ -13,19 +13,20 @@
             <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
             <title>#{requestTools.pageName}</title>
-            <link rel="stylesheet" href="css/bootstrap.min.css"/>
-            <link rel="stylesheet" href="css/main.css"/>
-            <!-- <h:outputStylesheet name="css/main.css"/> odkazuje do adresáře resources... -->
+            <!--<link rel="stylesheet" href="css/bootstrap.min.css"/>
+            <link rel="stylesheet" href="css/main.css"/> outputStylesheet odkazuje do adresáře resources...: -->
+            <h:outputStylesheet library="css" name="bootstrap.min.css"/> 
+            <h:outputStylesheet library="css" name="main.css"/> 
         </h:head>    
 
         <h:body>
-            <ui:include src="page-header.xhtml"/>        
+            <ui:include src="../partials/page-header.xhtml"/>        
             <main id="wrapper" class="group">
                     <ui:insert name="content"> 
                         Main content goes here...........
                     </ui:insert>                
             </main>
-            <ui:include src="page-footer.xhtml"/>               
+            <ui:include src="../partials/page-footer.xhtml"/>               
         </h:body>
     </f:view>
 </html>

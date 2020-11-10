@@ -7,6 +7,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -23,6 +25,7 @@ public class RequestTools {
     private String url = request.getRequestURL().toString();
     private String pageName;
     private String classForNavigation;
+    private Logger logger = LoggerFactory.getLogger(RequestTools.class);;
     
     @Inject
     SessionTools session;
@@ -46,17 +49,21 @@ public class RequestTools {
         this.url = url;
     }
     
+    public String getAppName(){
+        String uriWithoutLastSegment = uri.substring(0, uri.lastIndexOf('/'));
+        return uriWithoutLastSegment.substring(uriWithoutLastSegment.lastIndexOf('/') + 1);
+    }
     public String getPageName(){
-        pageName = uri.substring(uri.lastIndexOf('/') + 1);
-        System.out.println(pageName);
+        pageName = getAppName();
+        logger.debug(pageName);
         switch (pageName) {
-            case "todo.xhtml":
+            case "todo":
                 pageName = "todoName";
                 break;
-            case "blog.xhtml":
+            case "blog":
                 pageName = "blogName";
                 break;
-            case "photo.xhtml":
+            case "photo":
                 pageName = "photoName";
                 break;                
             default:
@@ -80,6 +87,23 @@ public class RequestTools {
     public void setClassForNavigation(String classForNavigation) {
         this.classForNavigation = classForNavigation;
     }
+
+    public Logger getLogger() {
+        return logger;
+    }
+
+    public void setLogger(Logger logger) {
+        this.logger = logger;
+    }
+
+    public SessionTools getSession() {
+        return session;
+    }
+
+    public void setSession(SessionTools session) {
+        this.session = session;
+    }
+    
     
     
     
